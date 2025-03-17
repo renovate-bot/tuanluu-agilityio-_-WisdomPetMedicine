@@ -1,6 +1,4 @@
-﻿
-
-namespace Wpm.Management.Domain.ValueObjects;
+﻿namespace Wpm.Management.Domain.ValueObjects;
 
 public record BreedId
 {
@@ -16,7 +14,7 @@ public record BreedId
 
         this.breedService = breedService;
 
-        ValidateBreed(Value);
+        ValidateBreed(value);
 
         Value = value;
     }

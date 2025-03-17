@@ -1,6 +1,5 @@
-﻿using Wpm.Management.Domain.ValueObjects;
-
-namespace Wpm.Management.Domain.Entities;
+﻿using Wpm.Management.Domain;
+using Wpm.Management.Domain.ValueObjects;
 
 public enum SexOfPet
 {
@@ -23,7 +22,7 @@ public class Pet : Entity
     public string Color { get; init; }
     public Weight Weight { get; private set; }
     public WeightClass WeightClass { get; private set; }
-    public SexOfPet Sex { get; init; }
+    public SexOfPet SexOfPet { get; init; }
 
     public BreedId BreedId { get; init; }
 
@@ -31,30 +30,39 @@ public class Pet : Entity
                string name,
                int age,
                string color,
-               SexOfPet sex,
+               SexOfPet sexOfPet,
                BreedId breedId)
     {
         Id = guid;
         Name = name;
         Age = age;
         Color = color;
-        Sex = sex;
+        SexOfPet = sexOfPet;
         BreedId = breedId;
     }
 
-    public void SetWeight(Weight weight)
+    public void SetWeight(Weight weight, IBreedService breedService)
     {
         Weight = weight;
+        SetWeightClass(breedService);
     }
 
     private void SetWeightClass(IBreedService breedService)
     {
-        var desertBreed = breedService.GetBreed(BreedId.Value);
+        var desiredBreed = breedService.GetBreed(BreedId.Value);
 
         var (from, to) = SexOfPet switch
         {
-            SexOfPet.Male => (desertBreed.MaleIdealWeight.From, desertBreed.MaleIdealWeight.To),
-            SexOfPet.Female => (desertBreed.FemaleIdealWeight.From, desertBreed.FemaleIdealWeight.To),
+            SexOfPet.Male => (desiredBreed.MaleIdealWeight.From, desiredBreed.MaleIdealWeight.To),
+            SexOfPet.Female => (desiredBreed.FemaleIdealWeight.From, desiredBreed.FemaleIdealWeight.To),
             _ => throw new ArgumentOutOfRangeException()
         };
+
+        WeightClass = Weight.Value switch
+        {
+            _ when Weight.Value < from => WeightClass.Underweight,
+            _ when Weight.Value > to => WeightClass.Overweight,
+            _ => WeightClass.Ideal
+        };
     }
+}

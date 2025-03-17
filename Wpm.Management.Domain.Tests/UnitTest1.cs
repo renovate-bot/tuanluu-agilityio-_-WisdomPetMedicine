@@ -16,14 +16,12 @@ public class UnitTest1
                            "Rex",
                            5,
                            "Brown",
-                           new Weight(10.5m),
                            SexOfPet.Male,
                            breedId);
         var pet2 = new Pet(id,
                            "Rex",
                            5,
                            "Brown",
-                           new Weight(10.5m),
                            SexOfPet.Male,
                            breedId);
 
@@ -41,14 +39,12 @@ public class UnitTest1
                             "Rex",
                             5,
                             "Brown",
-                            new Weight(10.5m),
                             SexOfPet.Male,
                             breedId);
         var pet2 = new Pet (id,
                             "Rex",
                             5,
                             "Brown",
-                            new Weight(10.5m),
                             SexOfPet.Male,
                             breedId);
 
@@ -68,14 +64,12 @@ public class UnitTest1
                             "Rex",
                             5,
                             "Brown",
-                            new Weight(10.5m),
                             SexOfPet.Male,
                             breedId);
         var pet2 = new Pet (id2,
                             "Rex",
                             5,
                             "Brown",
-                            new Weight(10.5m),
                             SexOfPet.Male,
                             breedId);
 
@@ -115,5 +109,53 @@ public class UnitTest1
         var id = Guid.NewGuid();
 
         Assert.Throws<ArgumentException>(() => new BreedId(id, breedService));
+    }
+
+    [Fact]
+    public void WeightClass_should_be_ideal()
+    {
+        var breedService = new FakeBreedService();
+        var breedId = new BreedId(breedService.breeds[0].Id, breedService);
+        var pet = new Pet(Guid.NewGuid(),
+                          "Rex",
+                          5,
+                          "Brown",
+                          SexOfPet.Male,
+                            breedId);
+        pet.SetWeight(new Weight(10), breedService);
+
+        Assert.True(pet.WeightClass == WeightClass.Ideal);
+    }
+
+    [Fact]
+    public void WeightClass_should_be_underweight()
+    {
+        var breedService = new FakeBreedService();
+        var breedId = new BreedId(breedService.breeds[0].Id, breedService);
+        var pet = new Pet(Guid.NewGuid(),
+                          "Rex",
+                          5,
+                          "Brown",
+                          SexOfPet.Male,
+                            breedId);
+        pet.SetWeight(new Weight(8), breedService);
+
+        Assert.True(pet.WeightClass == WeightClass.Underweight);
+    }
+
+    [Fact]
+    public void WeightClass_should_be_overweight()
+    {
+        var breedService = new FakeBreedService();
+        var breedId = new BreedId(breedService.breeds[0].Id, breedService);
+        var pet = new Pet(Guid.NewGuid(),
+                          "Rex",
+                          5,
+                          "Brown",
+                          SexOfPet.Male,
+                            breedId);
+        pet.SetWeight(new Weight(25), breedService);
+
+        Assert.True(pet.WeightClass == WeightClass.Overweight);
     }
 }
