@@ -122,7 +122,7 @@ public class UnitTest1
                           "Brown",
                           SexOfPet.Male,
                             breedId);
-        pet.SetWeight(new Weight(10), breedService);
+        pet.SetWeight(10, breedService);
 
         Assert.True(pet.WeightClass == WeightClass.Ideal);
     }
@@ -138,7 +138,7 @@ public class UnitTest1
                           "Brown",
                           SexOfPet.Male,
                             breedId);
-        pet.SetWeight(new Weight(8), breedService);
+        pet.SetWeight(8, breedService);
 
         Assert.True(pet.WeightClass == WeightClass.Underweight);
     }
@@ -154,7 +154,7 @@ public class UnitTest1
                           "Brown",
                           SexOfPet.Male,
                             breedId);
-        pet.SetWeight(new Weight(25), breedService);
+        pet.SetWeight(25, breedService);
 
         Assert.True(pet.WeightClass == WeightClass.Overweight);
     }
