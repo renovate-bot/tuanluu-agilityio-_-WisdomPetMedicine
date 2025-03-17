@@ -6,10 +6,12 @@ public class Breed : Entity
     public WeightRange MaleIdealWeight { get; init; }
     public WeightRange FemaleIdealWeight { get; init; }
 
-    public Breed(string name,
+    public Breed(Guid guid,
+                 string name,
                  WeightRange maleIdealWeight,
                  WeightRange femaleIdealWeight)
     {
+        Id = guid;
         Name = name;
         MaleIdealWeight = maleIdealWeight;
         FemaleIdealWeight = femaleIdealWeight;
