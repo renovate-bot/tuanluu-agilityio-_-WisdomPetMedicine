@@ -1,33 +1,31 @@
 ﻿namespace Wpm.Management.Domain;
 
-public class Pet : IEquatable<Pet>
+public enum SexOfPet
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public int Age { get; set; }
+    Male,
+    Female
+}
 
-    public bool Equals(Pet? other)
-    {
-        return other?.Id == Id;
-    }
+public class Pet : Entity
+{
+    public string Name { get; init; }
+    public int Age { get; init; }
+    public string Color { get; init; }
+    public Weight Weight { get; init; }
+    public SexOfPet Sex { get; init; }
 
-    public override bool Equals(object obj)
+    public Pet(Guid guid,
+               string name,
+               int age,
+               string color,
+               Weight weight,
+               SexOfPet sex)
     {
-        return Equals(obj as Pet);
-    }
-
-    public override int GetHashCode()
-    {
-        return Id.GetHashCode();
-    }
-
-    public static bool operator ==(Pet? left, Pet? right)
-    {
-        return left?.Id == right?.Id;
-    }
-
-    public static bool operator !=(Pet? left, Pet? right)
-    {
-        return left?.Id != right?.Id;
+        Id = guid;
+        Name = name;
+        Age = age;
+        Color = color;
+        Weight = weight;
+        Sex = sex;
     }
 }
