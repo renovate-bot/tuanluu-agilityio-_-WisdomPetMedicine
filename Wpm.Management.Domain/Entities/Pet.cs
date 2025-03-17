@@ -1,4 +1,6 @@
-﻿namespace Wpm.Management.Domain;
+﻿using Wpm.Management.Domain.ValueObjects;
+
+namespace Wpm.Management.Domain.Entities;
 
 public enum SexOfPet
 {
@@ -14,12 +16,15 @@ public class Pet : Entity
     public Weight Weight { get; init; }
     public SexOfPet Sex { get; init; }
 
+    public BreedId BreedId { get; init; }
+
     public Pet(Guid guid,
                string name,
                int age,
                string color,
                Weight weight,
-               SexOfPet sex)
+               SexOfPet sex,
+               BreedId breedId)
     {
         Id = guid;
         Name = name;
@@ -27,5 +32,6 @@ public class Pet : Entity
         Color = color;
         Weight = weight;
         Sex = sex;
+        BreedId = breedId;
     }
 }
