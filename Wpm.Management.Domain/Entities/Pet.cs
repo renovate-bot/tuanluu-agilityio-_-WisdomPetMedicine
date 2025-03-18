@@ -1,5 +1,6 @@
 ﻿using Wpm.Management.Domain;
 using Wpm.Management.Domain.ValueObjects;
+using Wpm.SharedKernel;
 
 public enum SexOfPet
 {
