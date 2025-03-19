@@ -5,6 +5,8 @@ namespace Wpm.Clinic.Domain;
 
 public class Consultation : AggregateRoot
 {
+    public DateTime StartedAt { get; init; }
+    public DateTime? EndedAt { get; private set; }
     public Text Diagnosis { get; private set; }
     public Text Treatment { get; private set; }
     public PatientId PatientId { get; init; }
@@ -12,9 +14,51 @@ public class Consultation : AggregateRoot
 
     public ConsultationStatus Status { get; private set; }
 
+    public Consultation(PatientId patientId)
+    {
+        Id = Guid.NewGuid();
+        PatientId = patientId;
+        Status = ConsultationStatus.Open;
+        StartedAt = DateTime.UtcNow;
+    }
+
+    public void End()
+    {
+        ValidateConsultationStatus();
+
+        if (Diagnosis == null || Treatment == null || CurrentWeight == null)
+        {
+            throw new InvalidOperationException("The consultation cannot be ended.");
+        }
+
+        Status = ConsultationStatus.Closed;
+        EndedAt = DateTime.UtcNow;
+    }
+
     public void SetWeight(Weight weight)
     {
+        ValidateConsultationStatus();
         CurrentWeight = weight;
+    }
+
+    public void SetDiagnosis(Text diagnosis)
+    {
+        ValidateConsultationStatus();
+        Diagnosis = diagnosis;
+    }
+
+    public void SetTreatment(Text treatment)
+    {
+        ValidateConsultationStatus();
+        Treatment = treatment;
+    }
+
+    public void ValidateConsultationStatus()
+    {
+        if (Status == ConsultationStatus.Closed)
+        {
+            throw new InvalidOperationException("Cannot modify a closed consultation.");
+        }
     }
 }
 
