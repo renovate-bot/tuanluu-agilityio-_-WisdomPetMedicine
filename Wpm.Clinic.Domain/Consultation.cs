@@ -5,6 +5,7 @@ namespace Wpm.Clinic.Domain;
 
 public class Consultation : AggregateRoot
 {
+    private readonly List<DrugAdministration> administeredDrugs = new();
     public DateTime StartedAt { get; init; }
     public DateTime? EndedAt { get; private set; }
     public Text Diagnosis { get; private set; }
@@ -20,6 +21,13 @@ public class Consultation : AggregateRoot
         PatientId = patientId;
         Status = ConsultationStatus.Open;
         StartedAt = DateTime.UtcNow;
+    }
+
+    public void AdministerDrug(DrugId drugId, Dose dose)
+    {
+        ValidateConsultationStatus();
+        var newDrugAdministration = new DrugAdministration(drugId, dose);
+        administeredDrugs.Add(newDrugAdministration);
     }
 
     public void End()
