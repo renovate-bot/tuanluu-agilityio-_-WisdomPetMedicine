@@ -1,11 +1,6 @@
 ﻿namespace Wpm.Clinic.Domain.ValueObjects;
 
-public enum UnitOfMeasure
-{
-    mg,
-    ml,
-    table
-}
+
 
 public record Dose
 {
@@ -16,5 +11,12 @@ public record Dose
     {
         Quantity = quantity;
         Unit = unit;
+    }
+
+    public enum UnitOfMeasure
+    {
+        mg,
+        ml,
+        tablet
     }
 }
