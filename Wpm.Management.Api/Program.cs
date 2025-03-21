@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Wpm.Management.Api.Infrastructure;
+using Wpm.Management.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddScoped<IManagementRepository, ManagementRepository>();
 builder.Services.AddDbContext<ManagementDbContext>(options =>
 {
     options.UseSqlite("Data Source=WpmManagement.db");
