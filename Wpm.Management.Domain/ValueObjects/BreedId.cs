@@ -5,6 +5,20 @@ public record BreedId
     private readonly IBreedService breedService;
     public Guid Value { get; init; }
 
+    public BreedId(Guid value)
+    {
+        if (value == Guid.Empty)
+        {
+            throw new ArgumentException("BreedId cannot be empty.", nameof(value));
+        }
+        Value = value;
+    }
+
+    public static BreedId Create(Guid value)
+    {
+        return new BreedId(value);
+    }
+
     public BreedId(Guid value, IBreedService breedService)
     {
         if (value == Guid.Empty)
@@ -26,4 +40,6 @@ public record BreedId
             throw new ArgumentException("Breed not found.", nameof(value));
         } 
     }
+
+    
 }
