@@ -27,14 +27,14 @@ public class Pet : Entity
 
     public BreedId BreedId { get; init; }
 
-    public Pet(Guid guid,
+    public Pet(Guid id,
                string name,
                int age,
                string color,
                SexOfPet sexOfPet,
                BreedId breedId)
     {
-        Id = guid;
+        Id = id;
         Name = name;
         Age = age;
         Color = color;
