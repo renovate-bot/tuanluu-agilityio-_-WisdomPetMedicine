@@ -2,7 +2,7 @@
 using Wpm.Management.Domain;
 using Wpm.Management.Domain.ValueObjects;
 
-namespace Wpm.Management.Api2.Infrastructure;
+namespace Wpm.Management.Api.Infrastructure;
 
 public class ManagementDbContext(DbContextOptions options) : DbContext(options)
 {

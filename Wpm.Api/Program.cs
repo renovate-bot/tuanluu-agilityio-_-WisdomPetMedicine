@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using Wpm.Management.Api2.Application;
-using Wpm.Management.Api2.Infrastructure;
+using Wpm.Management.Api.Application;
+using Wpm.Management.Api.Infrastructure;
 using Wpm.Management.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,16 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Wpm.Management.Api", Version = "v1" });
-});
+builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IManagementRepository, ManagementRepository>();
 builder.Services.AddScoped<IBreedService, BreedService>();
-builder.Services.AddScoped<ManagementApplicationService>(); 
+builder.Services.AddScoped<ManagementApplicationService>();
 builder.Services.AddDbContext<ManagementDbContext>(options =>
 {
     options.UseSqlite("Data Source=WpmManagement.db");
@@ -31,7 +26,7 @@ app.EnsureDbIsCreated();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.MapOpenApi();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();

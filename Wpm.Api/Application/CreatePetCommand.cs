@@ -1,4 +1,4 @@
-﻿namespace Wpm.Management.Api2.Application;
+﻿namespace Wpm.Management.Api.Application;
 
 public record CreatePetCommand(Guid Id,
                                string Name,
