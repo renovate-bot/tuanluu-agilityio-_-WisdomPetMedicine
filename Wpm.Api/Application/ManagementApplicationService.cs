@@ -20,4 +20,15 @@ public class ManagementApplicationService(IBreedService breedService,
         await dbContext.Pets.AddAsync(newPet);
         await dbContext.SaveChangesAsync();
     }
+
+    public async Task Handle(SetWeightCommand command)
+    {
+        var pet = await dbContext.Pets.FindAsync(command.Id);
+        if (pet == null)
+        {
+            throw new ArgumentException("Pet not found.", nameof(command.Id));
+        }
+        pet.SetWeight(command.Weight, breedService);
+        await dbContext.SaveChangesAsync();
+    }
 }
