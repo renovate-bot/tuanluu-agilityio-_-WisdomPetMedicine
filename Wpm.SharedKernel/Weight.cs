@@ -15,6 +15,6 @@ public record Weight
 
     public static implicit operator Weight(decimal value)
     {
-        return new Weight(value).Value;
+        return new Weight(value);
     }
 }
