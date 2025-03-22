@@ -1,7 +1,7 @@
 ﻿using Wpm.Management.Domain;
 using Wpm.Management.Domain.Entities;
 
-namespace Wpm.Management.Api2.Infrastructure;
+namespace Wpm.Management.Api.Infrastructure;
 
 public class BreedService : IBreedService
 {

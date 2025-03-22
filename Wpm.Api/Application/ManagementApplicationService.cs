@@ -2,7 +2,7 @@
 using Wpm.Management.Domain;
 using Wpm.Management.Domain.ValueObjects;
 
-namespace Wpm.Management.Api2.Application;
+namespace Wpm.Management.Api.Application;
 
 public class ManagementApplicationService(IBreedService breedService,
                                           ManagementDbContext dbContext)
