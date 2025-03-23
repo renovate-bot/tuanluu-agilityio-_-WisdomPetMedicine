@@ -1,4 +1,5 @@
-﻿using Wpm.Clinic.Domain.ValueObjects;
+﻿using Wpm.Clinic.Domain.Entities;
+using Wpm.Clinic.Domain.ValueObjects;
 
 namespace Wpm.Clinic.Domain.Tests;
 
@@ -73,15 +74,12 @@ public class UnitTest1
     }
 
     [Fact]
-    public void Consultation_should_register_vital_signs()
+    public void Consultation_should_register_vitalsigns()
     {
-        var vitalSigns = new List<VitalSigns>
-        {
-            new VitalSigns(37.5m, 120, 80),
-            new VitalSigns(37.5m, 120, 80)
-        };
         var c = new Consultation(Guid.NewGuid());
+        IEnumerable<VitalSigns> vitalSigns = [new VitalSigns(DateTime.UtcNow, 38.8m, 100, 120)];
         c.RegisterVitalSigns(vitalSigns);
-        Assert.True(c.VitalSignsReadings.Count == 2);
+        Assert.True(c.VitalSignReadings.Count == 1);
+        Assert.True(c.VitalSignReadings.First() == vitalSigns.First());
     }
 }
