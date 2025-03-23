@@ -33,6 +33,12 @@ public class ClinicDbContext(DbContextOptions options) : DbContext(options)
                 w.Property(p => p.Value);
             });
 
+            consultation.OwnsOne(p => p.When, w =>
+            {
+                w.Property(p => p.StartedAt);
+                w.Property(p => p.EndedAt);
+            });
+
             consultation.OwnsMany(c => c.AdministeredDrugs, a =>
             {
                 a.WithOwner().HasForeignKey("ConsultationId");
