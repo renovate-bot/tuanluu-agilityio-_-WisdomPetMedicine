@@ -1,7 +1,5 @@
 ﻿namespace Wpm.Clinic.Domain.ValueObjects;
 
-
-
 public record Dose
 {
     public decimal Quantity { get; set; }

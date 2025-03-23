@@ -1,6 +1,5 @@
 ﻿
 namespace Wpm.Clinic.Domain.ValueObjects;
-
 public record PatientId
 {
     public Guid Value { get; init; }
