@@ -39,33 +39,22 @@ public class Consultation : AggregateRoot
 
     public void End()
     {
-        ValidateConsultationStatus();
-
-        if (Diagnosis == null || Treatment == null || CurrentWeight == null)
-        {
-            throw new InvalidOperationException("The consultation cannot be ended.");
-        }
-
-        Status = ConsultationStatus.Closed;
-        When = new DateTimeRange(When.StartedAt, DateTime.UtcNow);
+        ApplyDomainEvent(new ConsultationEnd(Id, DateTime.UtcNow));
     }
 
     public void SetWeight(Weight weight)
     {
-        ValidateConsultationStatus();
-        CurrentWeight = weight;
+        ApplyDomainEvent(new WeightUpdated(Id, weight));
     }
 
     public void SetDiagnosis(Text diagnosis)
     {
-        ValidateConsultationStatus();
-        Diagnosis = diagnosis;
+        ApplyDomainEvent(new DiagnosisUpdated(Id, diagnosis));
     }
 
     public void SetTreatment(Text treatment)
     {
-        ValidateConsultationStatus();
-        Treatment = treatment;
+        ApplyDomainEvent(new TreatmentUpdated(Id, treatment));
     }
 
     private void ValidateConsultationStatus()
@@ -85,6 +74,27 @@ public class Consultation : AggregateRoot
                 PatientId = consultationStarted.PatientId;
                 Status = ConsultationStatus.Open;
                 When = consultationStarted.StartedAt;
+                break;
+            case DiagnosisUpdated diagnosisUpdated:
+                ValidateConsultationStatus();
+                Diagnosis = diagnosisUpdated.Diagnosis;
+                break;
+            case TreatmentUpdated treatmentUpdated:
+                ValidateConsultationStatus();
+                Treatment = treatmentUpdated.Treatment;
+                break;
+            case WeightUpdated weightUpdated:
+                ValidateConsultationStatus();
+                CurrentWeight = weightUpdated.Weight;
+                break;
+            case ConsultationEnd consultationEnd:
+                ValidateConsultationStatus();
+                if (Diagnosis == null || Treatment == null || CurrentWeight == null)
+                {
+                    throw new InvalidOperationException("The consultation cannot be ended.");
+                }
+                Status = ConsultationStatus.Closed;
+                When = new DateTimeRange(When.StartedAt, DateTime.UtcNow);
                 break;
         }
     }
