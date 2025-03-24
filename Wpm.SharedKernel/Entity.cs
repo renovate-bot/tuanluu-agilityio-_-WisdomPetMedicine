@@ -2,7 +2,7 @@
 
 public abstract class Entity : IEquatable<Entity>
 {
-    public Guid Id { get; init; }
+    public Guid Id { get; protected set; }
     public override bool Equals(object obj)
     {
         return Equals(obj as Entity);
