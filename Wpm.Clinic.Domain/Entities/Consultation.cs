@@ -24,6 +24,8 @@ public class Consultation : AggregateRoot
                                                  DateTime.UtcNow));
     }
 
+    public Consultation(IEnumerable<IDomainEvent> domainEvents) => Load(domainEvents);
+
     public void RegisterVitalSigns(IEnumerable<VitalSigns> vitalSigns)
     {
         ValidateConsultationStatus();
